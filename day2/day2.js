@@ -8,8 +8,8 @@ function main() {
   let score = 0;
   let score2 = 0;
 
-  const lines = fs.readFileSync("input.txt", "utf-8");
-  lines.split(/\r?\n/).forEach(line =>  {
+  const lines = fs.readFileSync("input.txt").toString();
+  lines.split("\n").forEach(line => {
     const round = line.split(" ");
     const opponent = round[0];
     const me = round[1];
@@ -18,8 +18,6 @@ function main() {
 
     //PART 2
     score2 += calcStrat(opponent, me);
-
-    console.log(opponent, me, calc(opponent, me));
   });
 
   console.log("TOTAL:", score);

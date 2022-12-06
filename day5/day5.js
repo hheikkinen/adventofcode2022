@@ -1,7 +1,7 @@
 function main() {
   const fs = require("fs");
 
-  let lines = fs.readFileSync("input.txt", "utf-8");
+  let lines = fs.readFileSync("input.txt").toString();
   const { stackPositions, startStacksEndIndex } = getStackStartPositions(lines);
   let startingStacks = getStartingStacks(stackPositions, startStacksEndIndex, lines);
 
@@ -19,10 +19,10 @@ function getStackStartPositions(lines) {
   let startStacksEndIndex = 0;
   const stackPositions = [];
 
-  lines.split(/\r?\n/).forEach((line, index) => {
-    if(line.charAt(1) === "1") {
-      for(let c = 0; c < line.length; c++) {
-        if(Number(line.charAt(c))) {
+  lines.split("\n").forEach((line, index) => {
+    if (line.charAt(1) === "1") {
+      for (let c = 0; c < line.length; c++) {
+        if (Number(line.charAt(c))) {
           stackPositions.push(c);
         }
       }
@@ -31,19 +31,19 @@ function getStackStartPositions(lines) {
     }
   });
 
-  return { stackPositions, startStacksEndIndex };
+  return {stackPositions, startStacksEndIndex};
 }
 
 function getStartingStacks(stackPositions, startStacksEndIndex, lines) {
   const startingStacks = [];
-  lines.split(/\r?\n/).forEach((line, index) => {
-    if(index < startStacksEndIndex) {
+  lines.split("\n").forEach((line, index) => {
+    if (index < startStacksEndIndex) {
       stackPositions.forEach((pos, i) => {
-        if(!startingStacks[i]) {
+        if (!startingStacks[i]) {
           startingStacks[i] = [];
         }
 
-        if(line.charAt(pos) !== " " && line.charAt(pos) !== "") {
+        if (line.charAt(pos) !== " " && line.charAt(pos) !== "") {
           startingStacks[i].push(line.charAt(pos));
         }
       });
@@ -54,21 +54,21 @@ function getStartingStacks(stackPositions, startStacksEndIndex, lines) {
 }
 
 function moveCrates(stacks, lines, keepOrder = false) {
-  lines.split(/\r?\n/).forEach((line, index) => {
-    if(line.includes("move")) {
-      const { count, from, to } = readMoveInstruction(line);
+  lines.split("\n").forEach(line => {
+    if (line.includes("move")) {
+      const {count, from, to} = readMoveInstruction(line);
 
       let fromStack = stacks[Number(from) - 1];
       let toStack = stacks[Number(to) - 1];
 
       let copied;
-      if(keepOrder) {
+      if (keepOrder) {
         copied = fromStack.slice(0, count).reverse();
       } else {
         copied = fromStack.slice(0, count);
       }
 
-      for(let i = 0; i < count; i++) {
+      for (let i = 0; i < count; i++) {
         fromStack.shift();
         toStack.unshift(copied[i]);
       }
@@ -85,7 +85,7 @@ function readMoveInstruction(line) {
   const regex = /move (\d+) from (\w+) to (\w+)/;
   const match = line.match(regex);
   const [_, count, from, to] = match;
-  return { count, from, to };
+  return {count, from, to};
 }
 
 main();

@@ -1,11 +1,11 @@
-const CHARS = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+const CHARS = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
 function main() {
   const fs = require("fs");
   let total = 0;
 
-  const lines = fs.readFileSync("input.txt", "utf-8");
-  lines.split(/\r?\n/).forEach(line => {
+  const lines = fs.readFileSync("input.txt").toString();
+  lines.split("\n").forEach(line => {
     total += parseLine(line);
   });
 
@@ -13,18 +13,14 @@ function main() {
 
   //PART 2
   let groups = [];
-  let currGroup = [];
   let groupsTotal = 0;
 
-  lines.split(/\r?\n/).forEach((line, index) => {
-    if(index > 0 && (index + 1) % 3 === 0) {  // Ugly
-      currGroup.push(line);
-      groups.push(currGroup);
-      currGroup = [];
-    } else {
-      currGroup.push(line);
-    }
-  });
+  const arr = lines.split(/\r?\n/);
+
+  for (let i = 0; i < arr.length; i += 3) {
+    const chunk = arr.slice(i, i + 3);
+    groups.push(chunk);
+  }
 
   groups.forEach(group => {
     groupsTotal += parseThreeLines(Array.from(group[0]), Array.from(group[1]), Array.from(group[2]));
@@ -40,8 +36,8 @@ function parseLine(line) {
   let sum = 0;
   let matches = [];
 
-  arr1.forEach((char) => {
-    if(arr2.includes(char) && !matches.includes(char)) {
+  arr1.forEach(char => {
+    if (arr2.includes(char) && !matches.includes(char)) {
       sum += prioCalc(char);
       matches.push(char);
     }
@@ -54,10 +50,10 @@ function parseThreeLines(line1, line2, line3) {
   let sum = 0;
   let matches = [];
 
-  line1.forEach((char) => {
-    if(line2.includes(char) && line3.includes(char) && !matches.includes(char)) {
+  line1.forEach(char => {
+    if (line2.includes(char) && line3.includes(char) && !matches.includes(char)) {
       sum += prioCalc(char);
-      matches.push(char)
+      matches.push(char);
     }
   });
 

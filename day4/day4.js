@@ -2,21 +2,21 @@ function main() {
   const fs = require("fs");
   let containsCount = 0;
 
-  const lines = fs.readFileSync("input.txt", "utf-8");
-  lines.split(/\r?\n/).forEach(line => {
-     const pairs = parseLine(line)
+  const lines = fs.readFileSync("input.txt").toString();
+  lines.split("\n").forEach(line => {
+     const pairs = parseLine(line);
 
     if(arrContainsCompare(pairs[0], pairs[1])) {
       containsCount++;
      }
   });
 
-  console.log("CONTAINS", containsCount);
+  console.log("CONTAINS:", containsCount);
 
   //PART 2
   let overlapCount = 0;
 
-  lines.split(/\r?\n/).forEach(line => {
+  lines.split("\n").forEach(line => {
     const pairs = parseLine(line)
     const pair1Arr = pairToArray(pairs[0][0], pairs[0][1]);
     const pair2Arr = pairToArray(pairs[1][0], pairs[1][1]);
@@ -29,7 +29,7 @@ function main() {
     }
   });
 
-  console.log("OVERLAPS", overlapCount);
+  console.log("OVERLAPS:", overlapCount);
 }
 
 function parseLine(line) {
@@ -47,7 +47,6 @@ function arrContainsCompare(arr1, arr2) {
 
 function pairToArray(start, end) {
   let arr = [];
-
   for(let i = start; i <= end; i++) {
     arr.push(i)
   }

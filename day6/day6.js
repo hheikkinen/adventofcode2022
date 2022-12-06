@@ -6,12 +6,12 @@ function main() {
   let arr = [];
   let charCount = 0;
 
-  for(let i = 0; i < input.length; i++) {
+  for (let i = 0; i < input.length; i++) {
     arr.unshift(input[i]);
 
-    if(arr.length > 4) {
+    if (arr.length > 4) {
       arr.pop();
-      if(!arr.some((element, index) => arr.indexOf(element) !== index)) {
+      if (!arr.some((element, index) => arr.indexOf(element) !== index)) {
         charCount = i + 1;
         break;
       }
@@ -23,12 +23,12 @@ function main() {
   //PART 2
   arr = [];
 
-  for(let i = 0; i < input.length; i++) {
+  for (let i = 0; i < input.length; i++) {
     arr.unshift(input[i]);
 
-    if(arr.length > 14) {
+    if (arr.length > 14) {
       arr.pop();
-      if(!arr.some((element, index) => arr.indexOf(element) !== index)) {
+      if (!arr.some((element, index) => arr.indexOf(element) !== index)) {
         charCount = i + 1;
         break;
       }
